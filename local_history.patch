@@ -1,0 +1,257 @@
+Index: app/src/main/java/br/com/bradesco/rotasescolar/vo/RoutesVO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/vo/RoutesVO.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/vo/RoutesVO.java	(revision )
+@@ -0,0 +1,23 @@
++package br.com.rotasescolar.vo;
++
++import java.io.Serializable;
++import java.util.List;
++
++import br.com.rotasescolar.model.Route;
++
++/**
++ * Created by gustavosantorio on 19/07/17.
++ */
++
++public class RoutesVO implements Serializable {
++
++    private List<Route> routes;
++
++    public List<Route> getRoutes() {
++        return routes;
++    }
++
++    public void setRoutes(List<Route> routes) {
++        this.routes = routes;
++    }
++}
+Index: app/src/main/java/br/com/bradesco/rotasescolar/vo/StudentVO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/vo/StudentVO.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/vo/StudentVO.java	(revision )
+@@ -0,0 +1,23 @@
++package br.com.rotasescolar.vo;
++
++import java.io.Serializable;
++import java.util.List;
++
++import br.com.rotasescolar.model.Student;
++
++/**
++ * Created by gustavosantorio on 19/07/17.
++ */
++
++public class StudentVO implements Serializable {
++
++    private List<Student> students;
++
++    public List<Student> getStudents() {
++        return students;
++    }
++
++    public void setStudents(List<Student> students) {
++        this.students = students;
++    }
++}
+Index: app/src/main/java/br/com/bradesco/rotasescolar/model/Route.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/model/Route.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/model/Route.java	(revision )
+@@ -1,10 +1,12 @@
+ package br.com.rotasescolar.model;
+ 
++import java.io.Serializable;
++
+ /**
+  * Created by gustavosantorio on 12/07/17.
+  */
+ 
+-public class Route {
++public class Route implements Serializable {
+ 
+     private int id;
+     private String name;
+Index: app/src/main/java/br/com/bradesco/rotasescolar/viewModel/MapsViewModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/viewModel/MapsViewModel.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/viewModel/MapsViewModel.java	(revision )
+@@ -10,10 +10,14 @@
+ import org.greenrobot.eventbus.Subscribe;
+ import org.greenrobot.eventbus.ThreadMode;
+ 
++import java.util.ArrayList;
+ import java.util.List;
+ 
+ import br.com.rotasescolar.controller.MapsController;
+ import br.com.rotasescolar.model.Route;
++import br.com.rotasescolar.model.Student;
++import br.com.rotasescolar.vo.RoutesVO;
++import br.com.rotasescolar.vo.StudentVO;
+ 
+ /**
+  * Created by gustavosantorio on 06/07/17.
+@@ -53,13 +57,23 @@
+         EventBus.getDefault().unregister(this);
+     }
+ 
++    private List<LatLng> getStudentsLatLng(List<Student> students){
++        List<LatLng> latLngs = new ArrayList<>();
++        for (Student student : students){
++            latLngs.add(new LatLng(student.getLat(), student.getLng()));
++        }
++        return latLngs;
++    }
++
+     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+-    public void onLatLngLoaded(List<LatLng> latLngs){
+-        this.latLngs.setValue(latLngs);
++    public void onLatLngLoaded(StudentVO studentVO){
++        if(studentVO != null)
++            this.latLngs.setValue(getStudentsLatLng(studentVO.getStudents()));
+     }
+ 
+     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+-    public void onRoutesLoaded(List<Route> routes){
+-        this.routes.setValue(routes);
++    public void onRoutesLoaded(RoutesVO routesVO){
++        if (routesVO != null)
++            this.routes.setValue(routesVO.getRoutes());
+     }
+ }
+Index: app/src/main/java/br/com/bradesco/rotasescolar/viewModel/RoutesViewModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/viewModel/RoutesViewModel.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/viewModel/RoutesViewModel.java	(revision )
+@@ -12,6 +12,7 @@
+ 
+ import br.com.rotasescolar.controller.RoutesController;
+ import br.com.rotasescolar.model.Route;
++import br.com.rotasescolar.vo.RoutesVO;
+ 
+ /**
+  * Created by gustavosantorio on 17/07/17.
+@@ -43,8 +44,8 @@
+     }
+ 
+     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+-    public void onRoutesLoaded(List<Route> routes){
+-        this.routes.setValue(routes);
++    public void onRoutesLoaded(RoutesVO routes){
++        this.routes.setValue(routes.getRoutes());
+     }
+ 
+ }
+Index: app/src/main/java/br/com/bradesco/rotasescolar/controller/MapsController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/controller/MapsController.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/controller/MapsController.java	(revision )
+@@ -8,6 +8,9 @@
+ import java.util.List;
+ 
+ import br.com.rotasescolar.model.Route;
++import br.com.rotasescolar.model.Student;
++import br.com.rotasescolar.vo.RoutesVO;
++import br.com.rotasescolar.vo.StudentVO;
+ 
+ /**
+  * Created by gustavosantorio on 10/07/17.
+@@ -17,17 +20,37 @@
+ 
+     public void getLatLongListByRouteId(int routeId){
+ //        implementar chamada
+-        List<LatLng> latLngs = new ArrayList<>();
++        List<Student> students = new ArrayList<>();
+         if(routeId == 1){
+-            latLngs.add(new LatLng(-35, 135));
+-            latLngs.add(new LatLng(-35, 136));
+-            latLngs.add(new LatLng(-35, 137));
++            Student student = new Student();
++            student.setLat(-35);
++            student.setLng(135);
++            students.add(student);
++            student = new Student();
++            student.setLat(-35);
++            student.setLng(136);
++            students.add(student);
++            student = new Student();
++            student.setLat(-35);
++            student.setLng(137);
++            students.add(student);
+         }else{
+-            latLngs.add(new LatLng(-36, 121));
+-            latLngs.add(new LatLng(-35, 122));
+-            latLngs.add(new LatLng(-38, 123));
++            Student student = new Student();
++            student.setLat(-35);
++            student.setLng(121);
++            students.add(student);
++            student = new Student();
++            student.setLat(-35);
++            student.setLng(122);
++            students.add(student);
++            student = new Student();
++            student.setLat(-35);
++            student.setLng(123);
++            students.add(student);
+         }
+-        EventBus.getDefault().post(latLngs);
++        StudentVO vo = new StudentVO();
++        vo.setStudents(students);
++        EventBus.getDefault().post(vo);
+     }
+ 
+     public void getRoutes(){
+@@ -39,6 +62,8 @@
+             route.setName("Rota " + i);
+             routes.add(route);
+         }
+-        EventBus.getDefault().post(routes);
++        RoutesVO vo = new RoutesVO();
++        vo.setRoutes(routes);
++        EventBus.getDefault().post(vo);
+     }
+ }
+Index: app/src/main/java/br/com/bradesco/rotasescolar/controller/RoutesController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/br/com/bradesco/rotasescolar/controller/RoutesController.java	(revision )
++++ app/src/main/java/br/com/bradesco/rotasescolar/controller/RoutesController.java	(revision )
+@@ -6,6 +6,7 @@
+ import java.util.List;
+ 
+ import br.com.rotasescolar.model.Route;
++import br.com.rotasescolar.vo.RoutesVO;
+ 
+ /**
+  * Created by gustavosantorio on 17/07/17.
+@@ -22,6 +23,8 @@
+             route.setName("Rota " + i);
+             routes.add(route);
+         }
+-        EventBus.getDefault().post(routes);
++        RoutesVO vo = new RoutesVO();
++        vo.setRoutes(routes);
++        EventBus.getDefault().post(vo);
+     }
+ }

@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.rotasescolar.ui.activity.MainActivity">
+
+    <item
+        android:id="@+id/menu_routes"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="@string/menu_title_routes" />
+
+    <item
+        android:id="@+id/menu_maps"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/menu_title_maps" />
+
+
+    <item
+        android:id="@+id/menu_student"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/menu_title_student" />
+
+</menu>

@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="form_padding">10dp</dimen>
+    <dimen name="ll_margim">5dp</dimen>
+    <dimen name="et_size">20sp</dimen>
+
+</resources>

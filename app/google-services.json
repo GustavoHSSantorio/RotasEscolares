@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "583171354",
+    "firebase_url": "https://rotas-escolares.firebaseio.com",
+    "project_id": "rotas-escolares",
+    "storage_bucket": "rotas-escolares.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583171354:android:0e10e482257dd329",
+        "android_client_info": {
+          "package_name": "br.com.rotasescolar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583171354-ld51vi7o4hlda0q5gfeh9lna1q6m6sp6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.rotasescolar",
+            "certificate_hash": "dd7e28967f80ac96d1dc03de8408f50474daaed2"
+          }
+        },
+        {
+          "client_id": "583171354-ql1rhjs5h922dakppp302vhe05bdk5p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKnA-gSd7XOGp9VeerpYPDp7GGUcs9Bwc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583171354-ql1rhjs5h922dakppp302vhe05bdk5p2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

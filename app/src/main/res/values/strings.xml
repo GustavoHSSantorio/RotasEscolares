@@ -1,0 +1,37 @@
+<resources>
+    <!--Default strings-->
+    <string name="app_name">RotasEscolar</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Activity Title-->
+    <string name="activity_title_register_route">Criar Rota</string>
+    <string name="activity_title_register_student">Registrar Aluno</string>
+
+    <!--Menu Title-->
+    <string name="menu_title_maps">Mapa</string>
+    <string name="menu_title_student">Alunos</string>
+    <string name="menu_title_routes">Rotas</string>
+
+    <!--Labels-->
+    <string name="lbl_routes_name">Nome da rota</string>
+    <string name="lbl_routes_period">Período da rota</string>
+    <string name="lbl_out_time">Horário de saída</string>
+    <string name="lbl_route_student">Alunos desta rota</string>
+    <string name="lbl_student_name">Nome do aluno</string>
+    <string name="lbl_student_parent">Nome do responsável</string>
+    <string name="lbl_student_parent_number">Númenro do responsável</string>
+    <string name="lbl_zipcode">CEP</string>
+    <string name="lbl_street">Rua</string>
+    <string name="lbl_number">Número</string>
+    <string name="lbl_complement">Complemento</string>
+    <string name="lbl_neigborhood">Bairro</string>
+
+    <!--String Arrays-->
+    <string-array name="array_routes_name_content">
+        <item>Manhã</item>
+        <item>Tarde</item>
+        <item>Noite</item>
+    </string-array>
+
+
+</resources>
